@@ -1,0 +1,53 @@
+{
+  "expo": {
+    "expoDevClient": {
+      "packagerPort": 19001,
+      "packagerOpts": {
+        "lanType": "ip"
+      }
+    },
+    "name": "client",
+    "slug": "client",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.firozt.client",
+      "infoPlist": {
+        "CFBundleURLTypes": [
+          {
+            "CFBundleURLSchemes": [
+              "com.googleusercontent.apps.37592009504-vmmtr4dh3j60s8ldejf5cgp6oemef1kc"
+            ]
+          }
+        ]
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.firozt.client"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "65da22d5-7c26-4683-b9bd-dca4e1eec674"
+      }
+    },
+    "owner": "firozt"
+  }
+}
