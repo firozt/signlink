@@ -4,9 +4,7 @@ import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-si
 import { GluestackUIProvider, Text } from '@gluestack-ui/themed';
 import { IOS_GOOGLE_LOGIN_ID, WEB_GOOGLE_ID } from '@env';
 import { config } from '@gluestack-ui/config';
-// import statusCodes along with GoogleSignin
 
-// Somewhere in your code
 
 
 GoogleSignin.configure({

@@ -1,5 +1,13 @@
 {
   "expo": {
+    "plugins": [
+      [
+        "@react-native-google-signin/google-signin",
+        {
+          "iosUrlScheme": "com.googleusercontent.apps.37592009504-vmmtr4dh3j60s8ldejf5cgp6oemef1kc"
+        }
+      ]
+    ],
     "expoDevClient": {
       "packagerPort": 19001,
       "packagerOpts": {
