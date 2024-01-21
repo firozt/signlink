@@ -1,4 +1,4 @@
-package com.signlink
+package com.anonymous.signlink
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate

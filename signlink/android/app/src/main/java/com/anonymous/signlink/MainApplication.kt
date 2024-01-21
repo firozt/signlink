@@ -1,4 +1,4 @@
-package com.signlink
+package com.anonymous.signlink
 
 import android.app.Application
 import com.facebook.react.PackageList
