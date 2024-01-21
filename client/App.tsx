@@ -19,6 +19,7 @@ export default function App() {
     try {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
+      console.log(user)
       setUser(JSON.stringify(userInfo));
     } catch (error: any) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
