@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import { View, Button } from 'react-native';
+import { View, Button, Text } from 'react-native';
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
-import { GluestackUIProvider, Text } from '@gluestack-ui/themed';
 import { IOS_GOOGLE_LOGIN_ID, WEB_GOOGLE_ID } from '@env';
-import { config } from '@gluestack-ui/config';
 
 
 
@@ -35,11 +33,10 @@ export default function App() {
   };
 
   return (
-    <GluestackUIProvider config={config}>
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Hello World!</Text>
-        <Button title="Sign in with Google" onPress={() => signIn()} />
-      </View>
-    </GluestackUIProvider>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>{user}</Text>
+      <Text>Hello World!</Text>
+      <Button title="Sign in with Google" onPress={() => signIn()} />
+    </View>
   );
 }
