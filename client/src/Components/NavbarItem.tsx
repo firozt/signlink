@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import { Button, Text, View } from '@gluestack-ui/themed/build/components';
-import { HomeIcon, SettingsIcon, UserIcon } from 'lucide-react-native';
+import { BookIcon, HomeIcon, SettingsIcon, UserIcon } from 'lucide-react-native';
 
 type Props = {
   onPress: () => any;
@@ -12,7 +12,7 @@ type Props = {
 const buttonMapping = new Map<string, React.ReactNode>([
   ['home', <HomeIcon color={'#4684BD'} />],
   ['profile', <UserIcon color={'#4684BD'} />],
-  ['settings', <SettingsIcon color={'#4684BD'} />],
+  ['book', <BookIcon color={'#4684BD'} />],
 ]);
 
 const NavbarItem = ({ onPress, iconType }: Props) => {

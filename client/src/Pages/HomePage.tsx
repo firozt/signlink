@@ -11,7 +11,7 @@ type Props = {
 
 const HomePage = ({user}: Props) => {
   return (
-    <ScrollView>
+    <ScrollView style={styles.container}>
       {/* <Center borderWidth={1} borderColor='black'> */}
       <Center style={styles.header}>
         <Text style={GlobalStyles.heading1}>Hey, {user.user.name}</Text>
@@ -29,7 +29,13 @@ const styles = StyleSheet.create({
     paddingTop: 25,
     paddingBottom: 25,
   },
-
+  container: {
+    backgroundColor: '#4F46BD',
+    width: '100%',
+  },
+  text: {
+    color: 'white',
+  },
 })
 
 export default HomePage

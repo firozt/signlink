@@ -4,10 +4,13 @@ import { IOS_GOOGLE_LOGIN_ID, WEB_GOOGLE_ID } from '@env';
 import { GoogleSignin, User, statusCodes } from '@react-native-google-signin/google-signin';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 // This page will only appear for users who are not signed in, they do not have any 
 // user account details saved into their async storage
 
-type Props = {}
+type Props = {
+  setUser: (newUser: User) => void
+}
 
 
 GoogleSignin.configure({
@@ -16,9 +19,8 @@ GoogleSignin.configure({
 });
 
 
-const NewUser = (props: Props) => {
-  const [googleUser, setGoogleUser] = useState<User>();
-  
+const NewUser = ({setUser}: Props) => {
+  const navigation = useNavigation()
   // attempts to login with google
   const signIn = async () => {
     try {
@@ -39,9 +41,10 @@ const NewUser = (props: Props) => {
   };
 
   const successfullSignin = async (userInfo: User) => {
-    setGoogleUser(userInfo)
     try {
-      await AsyncStorage.setItem('@user',JSON.stringify(userInfo));
+      const done = await AsyncStorage.setItem('@user',JSON.stringify(userInfo));
+      setUser(userInfo)
+      navigation.navigate('Home', {user: userInfo})
       
     } catch (error: unknown) {
       console.error(error)
@@ -50,9 +53,6 @@ const NewUser = (props: Props) => {
 
   return (
     <Center style={styles.container}>
-        <Text>
-          {JSON.stringify(googleUser,null, 2)}
-        </Text>
       <Button style={styles.button}>
         <Text 
         color='white'
