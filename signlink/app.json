@@ -1,7 +1,0 @@
-{
-  "name": "signlink",
-  "displayName": "signlink",
-  "android": {
-    "package": "com.anonymous.signlink"
-  }
-}
