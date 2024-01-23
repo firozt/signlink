@@ -1,51 +1,38 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { } from 'react-native';
-import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
-import { IOS_GOOGLE_LOGIN_ID, WEB_GOOGLE_ID } from '@env';
 import { GluestackUIProvider, GluestackUIStyledProvider, Text, Button, View, ButtonText, Switch, AlertDialog } from "@gluestack-ui/themed"
 import { config } from "@gluestack-ui/config"
+import NewUser from './src/Pages/NewUser';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { User } from '@react-native-google-signin/google-signin/lib/typescript/src/types';
+import UserArea from './src/Pages/UserArea';
 
-GoogleSignin.configure({
-  webClientId: WEB_GOOGLE_ID,
-  iosClientId: IOS_GOOGLE_LOGIN_ID,
-});
 
 export default function App() {
-  const [user, setUser] = useState<string>('');
-  
-  const signIn = async () => {
-    try {
-      await GoogleSignin.hasPlayServices();
-      const userInfo = await GoogleSignin.signIn();
-      console.log(user)
-      setUser(JSON.stringify(userInfo));
-    } catch (error: any) {
-      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        // user cancelled the login flow
-      } else if (error.code === statusCodes.IN_PROGRESS) {
-        // operation (e.g. sign in) is in progress already
-      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        // play services not available or outdated
-      } else {
-        // some other error happened
-      }
-    }
-  };
+  const [loggedIn, setLoggedIn] = React.useState<boolean>(false);
+  const [user, setUser] = React.useState<any>();
+  useEffect(() => {
+    isLoggedIn().then((isLoggedIn) => setLoggedIn(isLoggedIn))
+  },[])
 
-  const [showAlert, setShowAlert] = React.useState<boolean>(false);
-  
+  // Checks local storage to see if a user is saved
+  const isLoggedIn= async (): Promise<boolean> => {
+    try {
+      const user: User | null = JSON.parse(await AsyncStorage.getItem('@user')??'null');
+      setUser(user);
+      return !!user;
+    } catch (error) {
+      return false
+    }
+  }
+
 
   return (
     <GluestackUIStyledProvider config={config}>
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>{user}</Text>
-        <Text>Hello World!</Text>
-        <Button onPress={() => signIn()} >
-          <Text color='white'>Sign in with google</Text>
-        </Button>
-        <AlertDialog isOpen={true}/>
-        <Switch size="md" isDisabled={false}  />
-      
+        {
+          loggedIn ? <UserArea user={user} /> : <NewUser />
+        }
       </View>
     </GluestackUIStyledProvider>
   );
