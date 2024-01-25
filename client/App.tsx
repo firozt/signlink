@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Text } from 'react-native';
 import { 
   Button,
+  Center,
   GluestackUIStyledProvider,  
+  Spinner,  
   View 
 } from "@gluestack-ui/themed"
 import { 
@@ -23,12 +25,16 @@ import HomePage from './src/Pages/HomePage';
 import UserProfile from './src/Pages/UserProfile';
 import Navbar from './src/Components/Navbar';
 import DictionaryPage from './src/Pages/DictionaryPage';
+import Quiz from './src/Pages/Quiz';
+import DictionaryPopup from './src/Pages/DictionaryPopup';
 
 type RootStackparamList = {
   Home: { user: User },
   NewUser: (newUser: User) => void,
   Profile: { user: User }
   Dictionary: undefined
+  Quiz: { courseID: string },
+  DictionaryPopup: { word: string },
 }
 const Stack = createNativeStackNavigator<RootStackparamList>();
 
@@ -51,7 +57,7 @@ export default function App() {
   }
   if (loading) {
     return (
-      <Text>Loading</Text>
+      <Spinner size='large' />
     )
   }
 
@@ -91,6 +97,25 @@ export default function App() {
             headerShown:false,
             gestureEnabled:false,
           }}/>
+
+          <Stack.Screen 
+          name='Quiz'
+          options={{
+            headerShown:true,
+            gestureEnabled:true,
+          }}>
+            {(props) => <Quiz courseID={props.route.params?.courseID} {...props} />}
+          </Stack.Screen>
+          
+          <Stack.Screen 
+          name='DictionaryPopup'
+          options={{
+            headerShown:true,
+            gestureEnabled:true,
+          }}>
+            {(props) => <DictionaryPopup word={props.route.params?.word} {...props} />}
+          </Stack.Screen>
+
         </Stack.Navigator>
         {
           user? <Navbar user={user} /> : null

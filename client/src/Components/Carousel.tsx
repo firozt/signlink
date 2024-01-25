@@ -3,6 +3,7 @@ import { BugIcon } from 'lucide-react-native'
 import React from 'react'
 import { StyleSheet, Text, TouchableOpacity } from 'react-native'
 import CarouselCell from './CarouselCell'
+import { useNavigation } from '@react-navigation/native'
 
 type Props = {
   enableScrolling: boolean;
@@ -11,6 +12,7 @@ type Props = {
 }
 
 const Carousel = ({enableScrolling, numItems, title}: Props) => {
+  const navigation = useNavigation();
 
   const array = Array.from({ length: numItems }, (_, index) => index);
 
@@ -25,7 +27,7 @@ const Carousel = ({enableScrolling, numItems, title}: Props) => {
       contentContainerStyle={styles.contentContainer}>
         {
           array.map((item) => (
-            <CarouselCell onPress={() => 1+1} key={item} />
+            <CarouselCell onPress={() => navigation.navigate('Quiz',{courseID: '123'})} key={item} />
           ))
         }
       </ScrollView>

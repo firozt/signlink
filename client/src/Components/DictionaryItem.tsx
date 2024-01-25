@@ -1,13 +1,15 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
+import { useNavigation } from '@react-navigation/native'
 
 type Props = {
   word: string
 }
 
 const DictionaryItem = ({word}: Props) => {
+  const navigation = useNavigation();
   return (
-    <TouchableOpacity style={styles.dictionaryItem}>
+    <TouchableOpacity onPress={() => navigation.navigate('DictionaryPopup', {word:word})} style={styles.dictionaryItem}>
     <Text style={styles.text}>
       Test Word
     </Text>

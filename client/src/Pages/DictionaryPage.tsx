@@ -29,11 +29,11 @@ const DictionaryPage = ( props: Props) => {
                   placeholder="Search"
                 />
               </Input>
-              <Button style={styles.button}>
-                <Text>
+              <TouchableOpacity style={styles.button}>
+                <Text style={GlobalStyles.text}>
                   Submit
                 </Text>
-              </Button>
+              </TouchableOpacity>
             </View>
           </Center>
           <ScrollView style={styles.resultContainer}>
@@ -76,8 +76,13 @@ const styles = StyleSheet.create({
   button: {
     borderTopRightRadius: 100,
     borderBottomRightRadius: 100,
+    backgroundColor: '#4684BD',
+    width:80,
+    display:'flex',
+    alignContent:'center',
+    alignItems:'center',
+    justifyContent:'center',
   },
-
 
 })
 
