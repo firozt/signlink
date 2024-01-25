@@ -74,7 +74,7 @@ export default function App() {
             headerShown:false,
             gestureEnabled:false,
           }}>
-            {(props) => <UserProfile user={user} {...props} />}
+            {(props) => <UserProfile user={user} setUser={(newUser: User) => setUser(newUser)} {...props} />}
           </Stack.Screen>
           <Stack.Screen 
           name='NewUser'
@@ -92,7 +92,9 @@ export default function App() {
             gestureEnabled:false,
           }}/>
         </Stack.Navigator>
-        <Navbar user={user} />
+        {
+          user? <Navbar user={user} /> : null
+        }
       </GluestackUIStyledProvider>
     </NavigationContainer>
   );

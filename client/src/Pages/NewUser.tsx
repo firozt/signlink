@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { IOS_GOOGLE_LOGIN_ID, WEB_GOOGLE_ID } from '@env';
 import { GoogleSignin, User, statusCodes } from '@react-native-google-signin/google-signin';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { StyleSheet } from 'react-native';
+import { Image, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 // This page will only appear for users who are not signed in, they do not have any 
 // user account details saved into their async storage
@@ -40,6 +40,7 @@ const NewUser = ({setUser}: Props) => {
     }
   };
 
+
   const successfullSignin = async (userInfo: User) => {
     try {
       const done = await AsyncStorage.setItem('@user',JSON.stringify(userInfo));
@@ -52,15 +53,21 @@ const NewUser = ({setUser}: Props) => {
   }
 
   return (
-    <Center style={styles.container}>
-      <Button style={styles.button}>
-        <Text 
-        color='white'
-        onPress={() => signIn()}>
-          Login with Google
-        </Text>
-      </Button>
-    </Center>
+    <View style={styles.container}>
+      <Center marginTop={'33%'} >
+        {/* <Image style={{width: 125, height: 125}} source={require('../../public/SL-logo.png')} /> */}
+        <Image  style={{width: 300, height: 300}} source={require('../../public/SL-logo-transparent.png')} />
+        <Button style={styles.button}>
+          <Image  style={{width:25,height:25, right:10}} source={require('../../public/googlelogo.png')} />
+          <Text 
+          color='white'
+          onPress={() => signIn()}>
+            Login with Google
+          </Text>
+          
+        </Button>
+      </Center>
+    </View>
   )
 }
 
