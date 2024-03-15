@@ -12,6 +12,7 @@ const GlobalStyles = StyleSheet.create({
     fontSize: 64,
     color: 'white',
     fontFamily:'Roboto',
+    textAlign: 'center'
 
   },
   container: {
