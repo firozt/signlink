@@ -1,4 +1,4 @@
-package com.signlink.demo;
+package com.signlink.main;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
