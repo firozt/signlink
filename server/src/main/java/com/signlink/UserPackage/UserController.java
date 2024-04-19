@@ -1,11 +1,11 @@
 package com.signlink.UserPackage;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path="/users")
@@ -22,4 +22,19 @@ public class UserController {
     public List<Users> getAllUsers() {
         return userService.getAllUsers();
     }
+
+    @GetMapping("/get_info/{googleId}")
+    public Optional<Users> getUserInfo(@PathVariable String googleId) {
+        return userService.getUser(googleId);
+    }
+
+    @PostMapping("/save")
+    public void saveUser(@RequestBody Users u) {
+//        Check if user is already saved
+//        If true, do nothing
+//        If false, add to database
+        if (userService.UserExists(u.getGoogleID())) return;
+        userService.saveNewUser(u);
+    }
+
 }

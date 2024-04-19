@@ -1,15 +1,27 @@
 import { Button } from '@gluestack-ui/themed'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { User } from '@react-native-google-signin/google-signin'
-import React from 'react'
-import { View, Text, StyleSheet } from 'react-native';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
+import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import RNRestart from 'react-native-restart';
+import { SERVER_PROXY_URL } from '@env';
+import { UserInfo } from '../types';
+import GlobalStyles from '../GlobalStyles';
+import { Table } from 'lucide-react-native';
+import UserInfoTable from '../Components/UserInfoTable';
+
+
 type Props = {
   user: User
   setUser: (newUser: any) => void
 }
 
 const UserProfile = ({user, setUser}: Props) => {
+  const { width } = Dimensions.get('window');
+  const fontSize = width / 8
+  const [userInfo, setUserInfo] = useState<UserInfo>()
+
 
   const  logout = async () => {
     try {
@@ -22,10 +34,29 @@ const UserProfile = ({user, setUser}: Props) => {
     }
   }
 
+  // gets user info using the id stored in storage
+  const getUserInfo = async () => {
+    const userInfo: User = JSON.parse(await AsyncStorage.getItem('@user')??'null');
+    const url = `${SERVER_PROXY_URL}/users/get_info/${userInfo.user.id}` 
+    axios.get(url)
+    .then(response => {
+      const data : UserInfo = response.data
+      setUserInfo(data)
+    }).catch(error => console.error("ERROR GETTING USER ON USER PAGE " + error))
+  }
+
+  useEffect(() => {
+    getUserInfo()
+  }, [])
+
   return (
     <View style={styles.container}>
+      <Text style={{fontSize: fontSize, color: 'white', textAlign:'center', margin:12}}>
+        {userInfo?.name}'s Profile
+      </Text>
+      <UserInfoTable userInfo={userInfo}/>
       <Text>
-        User Profile
+        {JSON.stringify(userInfo)}
       </Text>
       <Button onPress={() => logout()} style={styles.logoutButton}>
         <Text style={styles.logoutButtonText}>
@@ -34,8 +65,9 @@ const UserProfile = ({user, setUser}: Props) => {
       </Button>
     </View>
   )
-}
 
+}
+// #453DAB
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#4F46BD',
@@ -50,7 +82,7 @@ const styles = StyleSheet.create({
   logoutButtonText: {
     color: 'white',
     fontSize:19,
-  }
-})
+  },
 
+})
 export default UserProfile
