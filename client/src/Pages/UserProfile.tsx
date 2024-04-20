@@ -7,8 +7,6 @@ import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import RNRestart from 'react-native-restart';
 import { SERVER_PROXY_URL } from '@env';
 import { UserInfo } from '../types';
-import GlobalStyles from '../GlobalStyles';
-import { Table } from 'lucide-react-native';
 import UserInfoTable from '../Components/UserInfoTable';
 
 
@@ -38,6 +36,7 @@ const UserProfile = ({user, setUser}: Props) => {
   const getUserInfo = async () => {
     const userInfo: User = JSON.parse(await AsyncStorage.getItem('@user')??'null');
     const url = `${SERVER_PROXY_URL}/users/get_info/${userInfo.user.id}` 
+    console.log(url)
     axios.get(url)
     .then(response => {
       const data : UserInfo = response.data

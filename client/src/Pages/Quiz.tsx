@@ -1,6 +1,5 @@
 import { View, Text } from 'react-native'
-import React from 'react'
-
+import React, { useCallback, useState } from 'react'
 
 
 type Props = {
@@ -8,11 +7,15 @@ type Props = {
 }
 
 const Quiz = ({courseID}: Props) => {
+
+
+
   return (
     <View>
       <Text>
         Quiz: {courseID}
       </Text>
+
     </View>
   )
 }

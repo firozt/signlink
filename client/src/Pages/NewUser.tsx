@@ -1,11 +1,15 @@
 import { Button, Center, ScrollView, Text, View, createStyle } from '@gluestack-ui/themed'
 import React, { useState } from 'react'
-import { IOS_GOOGLE_LOGIN_ID, WEB_GOOGLE_ID, SERVER_PROXY_URL } from '@env';
+import { IOS_GOOGLE_LOGIN_ID, WEB_GOOGLE_ID } from '@env';
+import { SERVER_PROXY_URL } from '@env';
+
 import { GoogleSignin, User, statusCodes } from '@react-native-google-signin/google-signin';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Image, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
+
+
 // This page will only appear for users who are not signed in, they do not have any 
 // user account details saved into their async storage
 
@@ -45,6 +49,7 @@ const NewUser = ({setUser}: Props) => {
   // make call to save user info (does checking on backend)
   const saveUser = (userInfo: User) => {
     const url =` ${SERVER_PROXY_URL}${"/users/save"}`
+    console.log(url)
     axios.post(url,{
       googleID: userInfo.user.id,
       name: userInfo.user.name,
