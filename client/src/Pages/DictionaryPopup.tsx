@@ -1,56 +1,51 @@
 import { View, Text, StyleSheet, Dimensions } from 'react-native'
 import React, { useState } from 'react'
 import YoutubePlayer from "react-native-youtube-iframe";
+import { DictionaryMapping } from '../types';
 
 type Props = {
-  word: string
+  dictMapping: DictionaryMapping
 }
 
-const DictionaryPopup = ({word}: Props) => {
-  const [playing, setPlaying] = useState(false);
-  const { width } = Dimensions.get('window');
-  const fontSize = width / 8
-  
+const DictionaryPopup = ({dictMapping}: Props) => {
   const getYoutubeID = (url: string) => {
-    var urlObj = new URL(url);
-    // Get the value of the 'v' parameter
-    var videoId = urlObj.searchParams.get('v');
-    
-    return videoId;
+    const id = url.split('=')[1] // at most this will be len 3, always pick 1
+    return id;
   }
+
   return (
     <View style={styles.container}>
-      <Text style={{fontSize: fontSize, color: 'white', textAlign:'center', margin:12}}>{word}</Text>
+      {/* <Text style={{fontSize: fontSize, color: 'white', textAlign:'center', margin:12}}>{word}</Text> */}
       <YoutubePlayer 
-      height={600}
+      height={250}
       play={true}
-      videoId='cNtU2UH-2Rk'
+      mute={true}
+      videoId={getYoutubeID(dictMapping?.url)??''}
       initialPlayerParams={{
-        start: 	10,
-        end:   12, 
-        controls: false,
+        start: 	dictMapping.startTime | 0,
+        end:   dictMapping.endTime | 0,
+        controls: true,
         loop: true,
         modestbranding: false,
         rel: false
-        
       }}
       >
       </YoutubePlayer>
+      <View style={{margin:10}}>
+        {/* <Text>
+          Full URL Here : 
+        </Text>
+        <Text>
+          {dictMapping.url}
+        </Text> */}
+      </View>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#4F46BD',
-    height: '100%',
-    width: '100%',
-  },
-  button: {
-    width:200,
-  },
-  heading: {
-    
+    marginVertical: 10
   }
 })
 

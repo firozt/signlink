@@ -1,18 +1,22 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
+import DictionaryPopup from '../Pages/DictionaryPopup'
+import { DictionaryMapping } from '../types'
 
 type Props = {
-  word: string
+  dictMapping: DictionaryMapping
 }
 
-const DictionaryItem = ({word}: Props) => {
-  const navigation = useNavigation();
+const DictionaryItem = ({dictMapping}: Props) => {
+  const [selected, setSelected] = useState<boolean>(false);
+
   return (
-    <TouchableOpacity onPress={() => navigation.navigate('DictionaryPopup', {word:word})} style={styles.dictionaryItem}>
+    <TouchableOpacity onPress={() => setSelected(!selected)} style={styles.dictionaryItem}>
     <Text style={styles.text}>
-      Test Word
+      {dictMapping.cleanText}
     </Text>
+    { selected && <DictionaryPopup dictMapping={dictMapping}  /> }
   </TouchableOpacity>
   )
 }
@@ -20,7 +24,7 @@ const DictionaryItem = ({word}: Props) => {
 const styles = StyleSheet.create({
   dictionaryItem: {
     width: '100%',
-    height: 75,
+    minHeight: 75,
     display: 'flex',
     alignContent:'center',
     justifyContent:'center',

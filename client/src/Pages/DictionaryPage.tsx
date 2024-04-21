@@ -1,17 +1,57 @@
-import React from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, NativeSyntheticEvent, TextInputChangeEventData } from 'react-native'
 import GlobalStyles from '../GlobalStyles'
 import { Button, Center, Input, InputField, InputIcon, InputSlot, SearchIcon } from '@gluestack-ui/themed'
 import DictionaryItem from '../Components/DictionaryItem'
 import Navbar from '../Components/Navbar'
 import { User } from '@react-native-google-signin/google-signin/lib/typescript/src/types'
+import { DictionaryMapping } from '../types'
+import { SERVER_PROXY_URL } from '@env';
+
+import axios from 'axios'
+import { Sprout } from 'lucide-react-native'
 
 type Props = {
 }
 
-const array = [...Array(16).keys()]; // TEMP TO GENERATE ALOT OF WORDS
+const array = [...Array(2).keys()]; // temp
+
 
 const DictionaryPage = ( props: Props) => {
+  const [listData, setListData] = useState<DictionaryMapping[]>()
+  const [search, setSearch] = useState<string>('');
+
+
+  useEffect(() => {
+    defaultWords()
+  },[])
+
+  const defaultWords = async () => {
+    const url = `${SERVER_PROXY_URL}/dictionary/getall/15`
+    axios.get(url).then(response => {
+      const data: DictionaryMapping[] = response.data
+      console.log(data)
+      setListData(data)
+    }).catch(error => console.error("ERROR MAKING DICTIONARY INIT REQUST : " + error))
+  }
+
+  const searchRequest = async () => {
+    const url = `${SERVER_PROXY_URL}/dictionary/getlike/${search}`
+    axios.get(url)
+    .then(response => {
+      const data : DictionaryMapping[] = response.data
+      setListData(data);
+    })
+  }
+
+  const handleSearch = () => {
+    if (search == '') {
+      defaultWords
+      return;
+    }
+    searchRequest()
+  }
+
   return (
     <>
       <View style={styles.container}>
@@ -25,11 +65,13 @@ const DictionaryPage = ( props: Props) => {
                 <InputSlot>
                   <InputIcon marginLeft={10} as={SearchIcon}/>
                 </InputSlot>
-                <InputField top={3}
+                <InputField 
+                  top={3}
                   placeholder="Search"
+                  onChange={(e: NativeSyntheticEvent<TextInputChangeEventData>) => setSearch(e.nativeEvent.text)}
                 />
               </Input>
-              <TouchableOpacity style={styles.button}>
+              <TouchableOpacity style={styles.button} onPress={() => handleSearch()}>
                 <Text style={GlobalStyles.text}>
                   Submit
                 </Text>
@@ -38,9 +80,11 @@ const DictionaryPage = ( props: Props) => {
           </Center>
           <ScrollView style={styles.resultContainer}>
             {
-              array.map((i) => (
-                <DictionaryItem key={i} word='Test Word' />
-              ))
+              listData?
+              listData.map((value, i) => (
+                <DictionaryItem key={i} dictMapping={value} />
+              )):
+              <Text>Loading...</Text>
             }
           </ScrollView>
         </View>

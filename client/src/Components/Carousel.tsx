@@ -4,17 +4,16 @@ import React from 'react'
 import { StyleSheet, Text, TouchableOpacity } from 'react-native'
 import CarouselCell from './CarouselCell'
 import { useNavigation } from '@react-navigation/native'
+import { Course } from '../types'
 
 type Props = {
-  enableScrolling: boolean;
-  numItems: number;
   title: string;
+  courseData: Course[]
 }
 
-const Carousel = ({enableScrolling, numItems, title}: Props) => {
+const Carousel = ({title,courseData}: Props) => {
   const navigation = useNavigation();
 
-  const array = Array.from({ length: numItems }, (_, index) => index);
 
   return (
     <>
@@ -23,11 +22,11 @@ const Carousel = ({enableScrolling, numItems, title}: Props) => {
       showsHorizontalScrollIndicator={false}
       horizontal={true} 
       style={styles.container}
-      scrollEnabled={enableScrolling}
+      scrollEnabled={courseData.length > 2}
       contentContainerStyle={styles.contentContainer}>
         {
-          array.map((item) => (
-            <CarouselCell onPress={() => navigation.navigate('Quiz',{courseID: '123'})} key={item} />
+          courseData.map((item, index) => (
+            <CarouselCell iconURI={item.iconURI} onPress={() => navigation.navigate('Quiz',{courseID: '123'})} key={index} />
           ))
         }
       </ScrollView>
@@ -44,7 +43,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     overflow: 'scroll',
-    paddingHorizontal: initalPadding
+    paddingHorizontal: initalPadding,
   },
   contentContainer: {
     paddingRight: cellWidth-initalPadding, // Calculate the total padding to scroll to the very right
@@ -54,7 +53,8 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 36,
     marginLeft: initalPadding,
-    marginBottom:10
+    marginBottom:8,
+    marginTop:20,
   }
 })
 

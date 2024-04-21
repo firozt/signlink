@@ -77,20 +77,21 @@ const NewUser = ({setUser}: Props) => {
       <Center marginTop={'33%'} >
         {/* <Image style={{width: 125, height: 125}} source={require('../../public/SL-logo.png')} /> */}
         <Image  style={{width: 300, height: 300}} source={require('../../public/SL-logo-transparent.png')} />
+        
         <Button style={styles.button}>
           <Image  style={{width:25,height:25, right:10}} source={require('../../public/googlelogo.png')} />
+
           <Text 
           color='white'
           onPress={() => signIn()}>
             Login with Google
           </Text>
-          
         </Button>
       </Center>
     </View>
   )
 }
-
+{/* <a href="https://imgbb.com/"><img src="" alt="alphabet-1" border="0" /></a> */}
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#4F46BD',

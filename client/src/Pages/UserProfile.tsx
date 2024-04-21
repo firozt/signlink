@@ -54,14 +54,13 @@ const UserProfile = ({user, setUser}: Props) => {
         {userInfo?.name}'s Profile
       </Text>
       <UserInfoTable userInfo={userInfo}/>
-      <Text>
-        {JSON.stringify(userInfo)}
-      </Text>
-      <Button onPress={() => logout()} style={styles.logoutButton}>
-        <Text style={styles.logoutButtonText}>
-          Logout
-        </Text>
-      </Button>
+      <View style={styles.container2}>
+        <Button onPress={() => logout()} style={styles.logoutButton}>
+          <Text style={styles.logoutButtonText}>
+            Logout
+          </Text>
+        </Button>
+      </View>
     </View>
   )
 
@@ -72,16 +71,23 @@ const styles = StyleSheet.create({
     backgroundColor: '#4F46BD',
     height: '100%',
     width: '100%',
+    flex: 1,
   },
   logoutButton: {
+    margin: 5,
     width: 100,
-    backgroundColor: 'red'
+    backgroundColor: 'red',
+
     
   },
   logoutButtonText: {
     color: 'white',
     fontSize:19,
   },
+  container2: {
+    flex: 1,
+    flexDirection: 'row-reverse'
+  }
 
 })
 export default UserProfile
