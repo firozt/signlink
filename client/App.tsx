@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Text } from 'react-native';
 import { 
-  Button,
-  Center,
   GluestackUIStyledProvider,  
   Spinner,  
-  View 
 } from "@gluestack-ui/themed"
 import { 
   config
@@ -27,14 +23,20 @@ import Navbar from './src/Components/Navbar';
 import DictionaryPage from './src/Pages/DictionaryPage';
 import Quiz from './src/Pages/Quiz';
 import DictionaryPopup from './src/Pages/DictionaryPopup';
+import LearnOrQuiz from './src/Pages/LearnOrQuiz';
+import { Course } from './src/types';
+import Learn from './src/Pages/Learn';
+import GraphProgression from './src/Pages/GraphProgression';
 
 type RootStackparamList = {
   Home: { user: User },
   NewUser: (newUser: User) => void,
   Profile: { user: User }
   Dictionary: undefined
-  Quiz: { courseID: string },
-  DictionaryPopup: { word: string },
+  Quiz: { courseID: string, testmode: boolean, prevScore: number },
+  Learn: { courseData: Course },
+  LearnOrQuiz: { courseData: Course  },
+  GraphProgression : { courseID: string},
 }
 const Stack = createNativeStackNavigator<RootStackparamList>();
 
@@ -64,7 +66,6 @@ export default function App() {
   return (
     <NavigationContainer>
       <GluestackUIStyledProvider config={config}>
-        {/* <Stack.Navigator initialRouteName={user===undefined ? 'NewUser': 'Home'}> */}
         <Stack.Navigator initialRouteName={user==null?'NewUser':'Home'}>
           <Stack.Screen 
           name='Home'
@@ -97,25 +98,68 @@ export default function App() {
             headerShown:false,
             gestureEnabled:false,
           }}/>
-
           <Stack.Screen 
-          name='Quiz'
-          options={{
-            headerShown:true,
-            gestureEnabled:true,
-          }}>
-            {(props) => <Quiz courseID={props.route.params?.courseID} {...props} />}
+            name='Quiz'
+            options={{
+              headerShown: true,
+              gestureEnabled: true,
+              headerStyle: {
+                backgroundColor: '#333587',
+              },
+              headerTintColor: '#FFFFFF',
+              headerTitleStyle: {
+                fontWeight: 'bold',
+              },
+            }}>
+            {(props) => <Quiz prevScore={props.route.params?.prevScore} courseID={props.route.params?.courseID} testmode={props.route?.params?.testmode} {...props} />}
           </Stack.Screen>
+          <Stack.Screen 
+            name='GraphProgression'
+            options={{
+              headerShown: true,
+              gestureEnabled: true,
+              headerStyle: {
+                backgroundColor: '#333587',
+              },
+              headerTintColor: '#FFFFFF',
+              headerTitleStyle: {
+                fontWeight: 'bold',
+              },
+            }}>
+            {(props) => <GraphProgression courseID={props.route.params?.courseID} {...props} />}
+          </Stack.Screen>
+          <Stack.Screen 
+            name='Learn'
+            options={{
+              headerShown: true,
+              gestureEnabled: true,
+              headerStyle: {
+                backgroundColor: '#333587',
+              },
+              headerTintColor: '#FFFFFF',
+              headerTitleStyle: {
+                fontWeight: 'bold',
+              },
+            }}>
+            {(props) => <Learn courseData={props.route.params?.courseData} {...props} />}
+          </Stack.Screen>
+          <Stack.Screen 
+            name='LearnOrQuiz'
+            options={{
+              headerShown: true,
+              gestureEnabled: true,
+              headerStyle: {
+                backgroundColor: '#333587',
+              },
+              headerTintColor: '#FFFFFF',
+              headerTitleStyle: {
+                fontWeight: 'bold',
+              },
+            }}>
+            {(props) => <LearnOrQuiz courseData={props.route.params?.courseData} {...props} />}
+          </Stack.Screen>
+
           
-          <Stack.Screen 
-          name='DictionaryPopup'
-          options={{
-            headerShown:true,
-            gestureEnabled:true,
-          }}>
-            {(props) => <DictionaryPopup word={props.route.params?.word} {...props} />}
-          </Stack.Screen>
-
         </Stack.Navigator>
         {
           user? <Navbar user={user} /> : null

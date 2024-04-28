@@ -14,8 +14,11 @@ const Navbar = ({user}: Props) => {
   const navigation = useNavigation();
   return (
     <View style={styles.nav}>
+      {/*  @ts-ignore, issue with react-native-navigation */}
       <NavbarItem onPress={() => navigation.navigate('Home', { user: user })} iconType='home'/>
-      <NavbarItem onPress={() => navigation.navigate('Profile', { user: user})} iconType='profile'/>
+      {/*  @ts-ignore, issue with react-native-navigation */}
+      <NavbarItem onPress={() => navigation.navigate('Profile', { user: user })} iconType='profile'/>
+      {/*  @ts-ignore, issue with react-native-navigation */}
       <NavbarItem onPress={() => navigation.navigate('Dictionary')} iconType='book'/>
     </View>
   )

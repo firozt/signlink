@@ -9,14 +9,14 @@ import jakarta.persistence.Table;
 public class Word {
     @Id
     String wordText;
-    String path;
+    String imageURI;
     String courseUsedIn;
 
     public Word() {}
 
-    public Word(String wordText, String path, String courseUsedIn) {
+    public Word(String wordText, String imageURI, String courseUsedIn) {
         this.wordText = wordText;
-        this.path = path;
+        this.imageURI = imageURI;
         this.courseUsedIn = courseUsedIn;
     }
 
@@ -36,19 +36,19 @@ public class Word {
         this.courseUsedIn = courseUsedIn;
     }
 
-    public String getPath() {
-        return path;
+    public String getImageURI() {
+        return imageURI;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public void setImageURI(String path) {
+        this.imageURI = path;
     }
 
     @Override
     public String toString() {
         return "Word{" +
                 "wordText='" + wordText + '\'' +
-                ", path='" + path + '\'' +
+                ", path='" + imageURI + '\'' +
                 ", courseUsedIn='" + courseUsedIn + '\'' +
                 '}';
     }

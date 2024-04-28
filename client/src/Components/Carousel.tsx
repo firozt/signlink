@@ -26,7 +26,8 @@ const Carousel = ({title,courseData}: Props) => {
       contentContainerStyle={styles.contentContainer}>
         {
           courseData.map((item, index) => (
-            <CarouselCell iconURI={item.iconURI} onPress={() => navigation.navigate('Quiz',{courseID: '123'})} key={index} />
+            // @ts-ignore, issue with react-native-navigation
+            <CarouselCell iconURI={item.iconURI} onPress={() => navigation.navigate('LearnOrQuiz',{courseData: item})} key={index} />
           ))
         }
       </ScrollView>
@@ -54,8 +55,8 @@ const styles = StyleSheet.create({
     fontSize: 36,
     marginLeft: initalPadding,
     marginBottom:8,
-    marginTop:20,
-  }
+  },
+
 })
 
 

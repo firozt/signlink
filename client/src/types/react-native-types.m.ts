@@ -4,5 +4,5 @@ declare module '@env' {
     export const WEB_GOOGLE_ID: string;
     // export const SERVER_PORT: string;
     // export const SERVER_HOSTNAME: string;
-    export const SERVER_PROXY_URL: string;
+    export const REACT_APP_SERVER_PROXY_URL: string;
 }

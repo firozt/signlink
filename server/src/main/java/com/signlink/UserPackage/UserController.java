@@ -1,6 +1,7 @@
 package com.signlink.UserPackage;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,12 +30,42 @@ public class UserController {
     }
 
     @PostMapping("/save")
-    public void saveUser(@RequestBody Users u) {
-//        Check if user is already saved
-//        If true, do nothing
-//        If false, add to database
-        if (userService.UserExists(u.getGoogleID())) return;
-        userService.saveNewUser(u);
+    public String saveUser(@RequestBody Users u) {
+        // this can only be done by google logins, only email check
+        String id = userService.UserExists(u.getEmail());
+        if (id != "") return id; // user already exists
+        userService.saveNewUser(u); // save new user
+        return userService.getUserByEmail(u.getEmail()).getID(); // cant fail
+
+    }
+
+
+    // returns true of all went well, else false
+    @PostMapping("/register")
+    public ResponseEntity<String> registerUser(@RequestBody Users u) {
+        if (u == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad input");
+        }
+        String userid = userService.registerUser(u);
+        System.out.println(userid);
+        if (userid != "") {
+            return ResponseEntity.ok(userid);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User already exists or invalid input");
+        }
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> loginUser(@RequestBody Users u) {
+        if (u.getEmail().isEmpty() || u.getPassword().isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad input");
+        }
+        String userID = userService.loginUser(u);
+        if (userID!=""){
+            return ResponseEntity.ok(userID); // return id back
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid credentials");
+        }
     }
 
 }

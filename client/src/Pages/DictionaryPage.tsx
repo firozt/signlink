@@ -6,37 +6,32 @@ import DictionaryItem from '../Components/DictionaryItem'
 import Navbar from '../Components/Navbar'
 import { User } from '@react-native-google-signin/google-signin/lib/typescript/src/types'
 import { DictionaryMapping } from '../types'
-import { SERVER_PROXY_URL } from '@env';
-
+import { REACT_APP_SERVER_PROXY_URL } from '@env'
 import axios from 'axios'
 import { Sprout } from 'lucide-react-native'
-
 type Props = {
 }
 
 const array = [...Array(2).keys()]; // temp
-
-
 const DictionaryPage = ( props: Props) => {
   const [listData, setListData] = useState<DictionaryMapping[]>()
   const [search, setSearch] = useState<string>('');
-
 
   useEffect(() => {
     defaultWords()
   },[])
 
   const defaultWords = async () => {
-    const url = `${SERVER_PROXY_URL}/dictionary/getall/15`
+    const url = `${REACT_APP_SERVER_PROXY_URL}/dictionary/getall/15`
+    console.log(url)
     axios.get(url).then(response => {
       const data: DictionaryMapping[] = response.data
       console.log(data)
       setListData(data)
     }).catch(error => console.error("ERROR MAKING DICTIONARY INIT REQUST : " + error))
   }
-
   const searchRequest = async () => {
-    const url = `${SERVER_PROXY_URL}/dictionary/getlike/${search}`
+    const url = `${REACT_APP_SERVER_PROXY_URL}/dictionary/getlike/${search}`
     axios.get(url)
     .then(response => {
       const data : DictionaryMapping[] = response.data

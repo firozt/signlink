@@ -14,13 +14,29 @@ export interface DictionaryMapping {
 }
 
 export interface Course {
+    courseData: never
     name: string,
     iconURI: string,
     difficulty: string,
+    cleanName?: string,
 }
 
 export interface Word {
-    word: string,
-    path: string,
+    wordText: string,
+    imageURI: string,
     course: string,
+}
+
+export interface UserScore {
+    usersGoogleID: string,
+    courseID: string,
+    score: number,
+    time: string,
+
+}
+
+export interface UserScoreByDifficulty {
+    easy: number,
+    medium: number,
+    hard: number
 }

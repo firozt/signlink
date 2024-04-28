@@ -14,7 +14,6 @@ public class WordCourseController {
         this.wordCourseService = wordCourseService;
     }
 
-
     @GetMapping("/words")
     public String rootWords() {
         return "Working";
@@ -48,4 +47,10 @@ public class WordCourseController {
     public void init() {
         wordCourseService.initialiseDatabaseWithData();
     }
+
+    @GetMapping("/course/get/{course}")
+    public Course getCourseInfo(@PathVariable String course) {
+        return wordCourseService.getCourse(course);
+    }
+
 }

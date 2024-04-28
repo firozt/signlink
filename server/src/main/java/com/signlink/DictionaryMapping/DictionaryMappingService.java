@@ -32,7 +32,6 @@ public class DictionaryMappingService {
 
     public void initialiseWithCSVData(String path) {
         List<String[]> csvData = getCSVData(path);
-        System.out.println(csvData.size());
         for (String[] row : csvData) {
             // ignore row[0] as it's the ID
             dictionaryMappingRepository.save(new DictionaryMapping(
@@ -43,7 +42,6 @@ public class DictionaryMappingService {
                     row[5]
             ));
         }
-
     }
 
     private List<String[]> getCSVData(String path) {
@@ -63,8 +61,6 @@ public class DictionaryMappingService {
         } catch (IOException | CsvValidationException e) {
             e.printStackTrace();
         }
-
-        System.out.println("Got All CSV Data Correctly");
         return csvData;
     }
 

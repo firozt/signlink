@@ -2,30 +2,41 @@ package com.signlink.UserPackage;
 
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.time.LocalDate;
 
 @Entity
 @Table
 public class Users {
+
     @Id
-    private String googleID; // id given by google login
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    private String ID; // id given by google login or generated here
     private String email;
     private String name;
+    private String password;
     private LocalDate createDate;
+
     /* --------------- Constructors --------------- */
 
     public Users() {}
 
-    public Users(String googleID, String name, String email){
-        this.googleID = googleID;
+    public Users(String ID, String name, String email){
+        this.ID = ID;
         this.name = name;
         this.createDate = LocalDate.now();
         this.email = email;
     }
 
-    public Users(String googleID, String name, LocalDate createDate, String email) {
-        this.googleID = googleID;
+    public Users(String ID, String name, LocalDate createDate, String email) {
+        this.ID = ID;
+        this.name = name;
+        this.createDate = createDate;
+        this.email = email;
+    }
+    public Users(String name, LocalDate createDate, String email) {
         this.name = name;
         this.createDate = createDate;
         this.email = email;
@@ -40,12 +51,20 @@ public class Users {
 
     /* --------------- Getter and Setters + Defaults Overrides --------------- */
 
-    public String getGoogleID() {
-        return googleID;
+    public String getPassword() {
+        return password;
     }
 
-    public void setGoogleID(String googleID) {
-        this.googleID = googleID;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String googleID) {
+        this.ID = googleID;
     }
 
     public String getName() {
@@ -75,7 +94,7 @@ public class Users {
     @Override
     public String toString() {
         return "Users{" +
-                "googleID='" + googleID + '\'' +
+                "id='" + ID + '\'' +
                 ", email='" + email + '\'' +
                 ", name='" + name + '\'' +
                 ", createDate=" + createDate +

@@ -29,10 +29,18 @@ public class WordCourseService {
         return wordRepository.findByCourseUsedInEquals(course);
     }
 
-    public void initialiseDatabaseWithData() {
-        String path = "F:/work-related/signlink/word_icon_paths.csv";
-        List<String[]> csvData = getCSVData(path);
+    // gets a course given its ID
+    public Course getCourse(String courseID) {
+        return courseRepository.findById(courseID).orElseThrow();
+    }
 
+    public void initialiseDatabaseWithData() {
+        initialiseDatabaseWithWordIcons();
+        initialiseDatabaseWithCourseIcons();
+    }
+
+    private void initialiseDatabaseWithWordIcons() {
+        List<String[]> csvData = getCSVData("F:/work-related/signlink/word_icon_paths.csv");
         for (String[] row : csvData) {
             // csv data is in the form
             // word, path, course
@@ -44,10 +52,13 @@ public class WordCourseService {
                     )
             );
         }
+    }
 
-        path = "F:/work-related/signlink/course_icon_paths.csv";
-        csvData = getCSVData(path);
-
+    private void initialiseDatabaseWithCourseIcons() {
+        String path = "F:/work-related/signlink/course_icon_paths.csv";
+        List<String[]> csvData = getCSVData(path);
+        // csv data is in the form
+        // word, path, course
         for (String[] row : csvData) {
             courseRepository.save(
                     new Course(
@@ -76,8 +87,6 @@ public class WordCourseService {
         } catch (IOException | CsvValidationException e) {
             e.printStackTrace();
         }
-
-        System.out.println("Got All CSV Data Correctly");
         return csvData;
     }
 
