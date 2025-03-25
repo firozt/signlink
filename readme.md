@@ -1,3 +1,18 @@
+### About The Project
+This project was a passion project of mine to create a platform for people to learn to sgin in American Sign Language (ASL) on the go. This was my gateway to mobile development, coming from a web development background this project introduced me to mobile specific standards and mobile development good, and bad practices.
+
+### The Tech Stack
+# Frontend
+- React Native (with Typescript)
+- Gluestacks UI Library for React Native
+
+# Backend
+- Java Spring Boot API handling server
+- Postgrsql Relational Database
+
+# Misc
+- Python for web scraping data (via BeatifulSoup 4 and Selenium)
+
 
 ### Software Prerequisites
 - Account registered on ngrok (https://ngrok.com)
