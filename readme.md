@@ -35,3 +35,4 @@ It should look something like this `REACT_APP_SERVER_PROXY_URL = https://74e4-2a
 9) Open Android Studio, click `More Actions` and run a virtual device (any works fine)
 The application show now be installing or installed on the emulated device.
 
+More content about this project can be found on my portfolio website https://www.ramizabdulla.me !
